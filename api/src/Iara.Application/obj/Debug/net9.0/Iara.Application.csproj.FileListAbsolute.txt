@@ -1,0 +1,16 @@
+E:\projectsRepos\iara\iara\api\src\Iara.Application\bin\Debug\net9.0\Iara.Application.deps.json
+E:\projectsRepos\iara\iara\api\src\Iara.Application\bin\Debug\net9.0\Iara.Application.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Application\bin\Debug\net9.0\Iara.Application.pdb
+E:\projectsRepos\iara\iara\api\src\Iara.Application\bin\Debug\net9.0\Iara.Domain.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Application\bin\Debug\net9.0\Iara.Domain.pdb
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.csproj.AssemblyReference.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.AssemblyInfoInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.AssemblyInfo.cs
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.csproj.CoreCompileInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.sourcelink.json
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.App.6F58E75D.Up2Date
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\refint\Iara.Application.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\Iara.Application.pdb
+E:\projectsRepos\iara\iara\api\src\Iara.Application\obj\Debug\net9.0\ref\Iara.Application.dll

@@ -1,0 +1,9 @@
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.csproj.AssemblyReference.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\rpswa.dswa.cache.json
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.GeneratedMSBuildEditorConfig.editorconfig
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.AssemblyInfoInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.AssemblyInfo.cs
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.csproj.CoreCompileInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.MvcApplicationPartsAssemblyInfo.cs
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.MvcApplicationPartsAssemblyInfo.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Api\obj\Debug\net9.0\Iara.Api.sourcelink.json

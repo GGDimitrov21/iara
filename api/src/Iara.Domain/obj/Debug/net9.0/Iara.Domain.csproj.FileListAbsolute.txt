@@ -1,0 +1,12 @@
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\bin\Debug\net9.0\Iara.Domain.deps.json
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\bin\Debug\net9.0\Iara.Domain.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\bin\Debug\net9.0\Iara.Domain.pdb
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.AssemblyInfoInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.AssemblyInfo.cs
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.csproj.CoreCompileInputs.cache
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.sourcelink.json
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\refint\Iara.Domain.dll
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\Iara.Domain.pdb
+E:\projectsRepos\iara\iara\api\src\Iara.Domain\obj\Debug\net9.0\ref\Iara.Domain.dll
