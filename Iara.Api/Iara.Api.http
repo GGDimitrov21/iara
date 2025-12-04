@@ -1,0 +1,6 @@
+@Iara.Api_HostAddress = http://localhost:5153
+
+GET {{Iara.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

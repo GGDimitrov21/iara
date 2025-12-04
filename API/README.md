@@ -19,14 +19,14 @@ Create a PostgreSQL database using the provided SQL script in the project docume
 
 ```env
 # Database Configuration
-DB_HOST=localhost
+DB_HOST=your_database_host
 DB_PORT=5432
-DB_NAME=iara_db
-DB_USER=postgres
-DB_PASSWORD=your_actual_password
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
 
 # JWT Configuration
-JWT_SECRET=YourActualSecureSecretKeyHere_AtLeast32CharactersLong!
+JWT_SECRET=your_jwt_secret_at_least_32_characters_long
 JWT_ISSUER=IaraAPI
 JWT_AUDIENCE=IaraClient
 JWT_EXPIRATION_HOURS=24

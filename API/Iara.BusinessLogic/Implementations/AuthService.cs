@@ -60,7 +60,8 @@ namespace Iara.BusinessLogic.Implementations
         public async Task<string> GenerateJwtTokenAsync(UserResponseDTO user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "YourVerySecureSecretKeyHere_AtLeast32CharactersLong!";
+            var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") 
+                ?? throw new InvalidOperationException("JWT_SECRET environment variable is not set");
             var key = Encoding.ASCII.GetBytes(jwtSecret);
             
             var expirationHours = int.TryParse(Environment.GetEnvironmentVariable("JWT_EXPIRATION_HOURS"), out var hours) ? hours : 24;
