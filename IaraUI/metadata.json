@@ -1,0 +1,5 @@
+{
+  "name": "IARA Fisheries Management",
+  "description": "A comprehensive dashboard for managing fisheries, vessels, permits, and inspections.",
+  "requestFramePermissions": []
+}
