@@ -10,6 +10,11 @@ obj/
 .env
 *.env.local
 
+# Node.js
+node_modules/
+dist/
+*.log
+
 # Visual Studio
 .vs/
 *.vsidx
