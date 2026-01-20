@@ -2,69 +2,59 @@ using Iara.Domain.Entities;
 
 namespace Iara.Domain.Repositories;
 
-public interface IUserRepository : IRepository<User>
+public interface IPersonnelRepository : IRepository<Personnel>
 {
-    Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default);
-    Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
-    Task<bool> UsernameExistsAsync(string username, CancellationToken cancellationToken = default);
+    Task<Personnel?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Personnel>> GetByRoleAsync(string role, CancellationToken cancellationToken = default);
     Task<bool> EmailExistsAsync(string email, CancellationToken cancellationToken = default);
 }
 
-public interface IFishingShipRepository : IRepository<FishingShip>
+public interface IVesselRepository : IRepository<Vessel>
 {
-    Task<FishingShip?> GetByIaraIdAsync(string iaraId, CancellationToken cancellationToken = default);
-    Task<FishingShip?> GetByMaritimeNumberAsync(string maritimeNumber, CancellationToken cancellationToken = default);
-    Task<IEnumerable<FishingShip>> GetActiveShipsAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<FishingShip>> GetShipsByOwnerAsync(string ownerName, CancellationToken cancellationToken = default);
+    Task<Vessel?> GetByRegNumberAsync(string regNumber, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Vessel>> GetByCaptainIdAsync(int captainId, CancellationToken cancellationToken = default);
+    Task<Vessel?> GetWithDetailsAsync(int vesselId, CancellationToken cancellationToken = default);
 }
 
-public interface IRegistrationRepository : IRepository<Registration>
+public interface IPermitRepository : IRepository<Permit>
 {
-    Task<IEnumerable<Registration>> GetValidRegistrationsAsync(DateOnly asOfDate, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Registration>> GetExpiringRegistrationsAsync(DateOnly fromDate, DateOnly toDate, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Permit>> GetByVesselIdAsync(int vesselId, CancellationToken cancellationToken = default);
+    Task<Permit?> GetActivePermitForVesselAsync(int vesselId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Permit>> GetActivePermitsAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Permit>> GetExpiringPermitsAsync(DateTime fromDate, DateTime toDate, CancellationToken cancellationToken = default);
 }
 
-public interface IFishingPermitRepository : IRepository<FishingPermit>
+public interface ISpeciesRepository : IRepository<Species>
 {
-    Task<IEnumerable<FishingPermit>> GetPermitsByShipIdAsync(int shipId, CancellationToken cancellationToken = default);
-    Task<FishingPermit?> GetActivePermitForShipAsync(int shipId, int year, CancellationToken cancellationToken = default);
-    Task<IEnumerable<FishingPermit>> GetPermitsByYearAsync(int year, CancellationToken cancellationToken = default);
-    Task<IEnumerable<FishingPermit>> GetExpiringPermitsAsync(DateOnly fromDate, DateOnly toDate, CancellationToken cancellationToken = default);
+    Task<Species?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
 }
 
-public interface IFishingLogEntryRepository : IRepository<FishingLogEntry>
+public interface ICatchQuotaRepository : IRepository<CatchQuota>
 {
-    Task<IEnumerable<FishingLogEntry>> GetLogEntriesByShipIdAsync(int shipId, CancellationToken cancellationToken = default);
-    Task<FishingLogEntry?> GetLogEntryWithCatchesAsync(long logEntryId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<FishingLogEntry>> GetLogEntriesByDateRangeAsync(int shipId, DateOnly startDate, DateOnly endDate, CancellationToken cancellationToken = default);
-    Task<bool> LogEntryExistsForDateAsync(int shipId, DateOnly date, CancellationToken cancellationToken = default);
+    Task<IEnumerable<CatchQuota>> GetByPermitIdAsync(int permitId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<CatchQuota>> GetBySpeciesIdAsync(int speciesId, CancellationToken cancellationToken = default);
+    Task<CatchQuota?> GetByPermitSpeciesYearAsync(int permitId, int speciesId, short year, CancellationToken cancellationToken = default);
 }
 
-public interface ICatchCompositionRepository : IRepository<CatchComposition>
+public interface ILogbookRepository : IRepository<Logbook>
 {
-    Task<IEnumerable<CatchComposition>> GetCatchesByLogEntryIdAsync(long logEntryId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<CatchComposition>> GetCatchesBySpeciesAsync(string species, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Logbook>> GetByVesselIdAsync(int vesselId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Logbook>> GetByCaptainIdAsync(int captainId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Logbook>> GetByDateRangeAsync(int vesselId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default);
+    Task<Logbook?> GetWithDetailsAsync(int logEntryId, CancellationToken cancellationToken = default);
 }
 
 public interface IInspectionRepository : IRepository<Inspection>
 {
-    Task<IEnumerable<Inspection>> GetInspectionsByShipIdAsync(int shipId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Inspection>> GetInspectionsByInspectorIdAsync(int inspectorId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Inspection>> GetViolationsAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<Inspection>> GetUnprocessedInspectionsAsync(CancellationToken cancellationToken = default);
-    Task<Inspection?> GetByProtocolNumberAsync(string protocolNumber, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Inspection>> GetByVesselIdAsync(int vesselId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Inspection>> GetByInspectorIdAsync(int inspectorId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Inspection>> GetIllegalInspectionsAsync(CancellationToken cancellationToken = default);
+    Task<Inspection?> GetWithDetailsAsync(int inspectionId, CancellationToken cancellationToken = default);
 }
 
-public interface IShipClassificationLogRepository : IRepository<ShipClassificationLog>
+public interface ITicketRepository : IRepository<Ticket>
 {
-    Task<IEnumerable<ShipClassificationLog>> GetClassificationsByShipIdAsync(int shipId, CancellationToken cancellationToken = default);
-    Task<ShipClassificationLog?> GetClassificationByYearAsync(int shipId, int year, CancellationToken cancellationToken = default);
-}
-
-public interface IRefreshTokenRepository : IRepository<RefreshToken>
-{
-    Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken cancellationToken = default);
-    Task<IEnumerable<RefreshToken>> GetActiveTokensByUserIdAsync(int userId, CancellationToken cancellationToken = default);
-    Task RevokeAllUserTokensAsync(int userId, CancellationToken cancellationToken = default);
-    Task RemoveExpiredTokensAsync(CancellationToken cancellationToken = default);
+    Task<Ticket?> GetByTicketNumberAsync(string ticketNumber, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Ticket>> GetByInspectionIdAsync(int inspectionId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Ticket>> GetUnvalidatedTicketsAsync(CancellationToken cancellationToken = default);
 }

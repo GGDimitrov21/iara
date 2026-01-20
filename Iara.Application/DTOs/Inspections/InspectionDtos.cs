@@ -6,18 +6,13 @@ namespace Iara.Application.DTOs.Inspections;
 public record InspectionDto
 {
     public int InspectionId { get; init; }
-    public int? InspectorId { get; init; }
-    public string? InspectorName { get; init; }
-    public int ShipId { get; init; }
-    public string ShipName { get; init; } = string.Empty;
+    public int VesselId { get; init; }
+    public string VesselName { get; init; } = string.Empty;
+    public int InspectorId { get; init; }
+    public string InspectorName { get; init; } = string.Empty;
     public DateTime InspectionDate { get; init; }
-    public string? InspectionLocation { get; init; }
-    public string ProtocolNumber { get; init; } = string.Empty;
-    public bool HasViolation { get; init; }
-    public string? ViolationDescription { get; init; }
-    public string? SanctionsImposed { get; init; }
-    public string? ProofOfViolationUrl { get; init; }
-    public bool IsProcessed { get; init; }
+    public bool IsLegal { get; init; }
+    public string? Notes { get; init; }
 }
 
 /// <summary>
@@ -25,11 +20,19 @@ public record InspectionDto
 /// </summary>
 public record CreateInspectionRequest
 {
-    public int ShipId { get; init; }
-    public string? InspectionLocation { get; init; }
-    public string ProtocolNumber { get; init; } = string.Empty;
-    public bool HasViolation { get; init; }
-    public string? ViolationDescription { get; init; }
-    public string? SanctionsImposed { get; init; }
-    public string? ProofOfViolationUrl { get; init; }
+    public int VesselId { get; init; }
+    public int InspectorId { get; init; }
+    public DateTime InspectionDate { get; init; }
+    public bool IsLegal { get; init; }
+    public string? Notes { get; init; }
+}
+
+/// <summary>
+/// DTO for updating inspection record
+/// </summary>
+public record UpdateInspectionRequest
+{
+    public DateTime InspectionDate { get; init; }
+    public bool IsLegal { get; init; }
+    public string? Notes { get; init; }
 }

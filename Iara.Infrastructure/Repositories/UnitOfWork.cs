@@ -14,37 +14,34 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(
         IaraDbContext context,
-        IUserRepository users,
-        IFishingShipRepository fishingShips,
-        IRegistrationRepository registrations,
-        IFishingPermitRepository fishingPermits,
-        IFishingLogEntryRepository fishingLogEntries,
-        ICatchCompositionRepository catchCompositions,
+        IPersonnelRepository personnel,
+        IVesselRepository vessels,
+        IPermitRepository permits,
+        ISpeciesRepository species,
+        ICatchQuotaRepository catchQuotas,
+        ILogbookRepository logbook,
         IInspectionRepository inspections,
-        IShipClassificationLogRepository shipClassificationLogs,
-        IRefreshTokenRepository refreshTokens)
+        ITicketRepository tickets)
     {
         _context = context;
-        Users = users;
-        FishingShips = fishingShips;
-        Registrations = registrations;
-        FishingPermits = fishingPermits;
-        FishingLogEntries = fishingLogEntries;
-        CatchCompositions = catchCompositions;
+        Personnel = personnel;
+        Vessels = vessels;
+        Permits = permits;
+        Species = species;
+        CatchQuotas = catchQuotas;
+        Logbook = logbook;
         Inspections = inspections;
-        ShipClassificationLogs = shipClassificationLogs;
-        RefreshTokens = refreshTokens;
+        Tickets = tickets;
     }
 
-    public IUserRepository Users { get; }
-    public IFishingShipRepository FishingShips { get; }
-    public IRegistrationRepository Registrations { get; }
-    public IFishingPermitRepository FishingPermits { get; }
-    public IFishingLogEntryRepository FishingLogEntries { get; }
-    public ICatchCompositionRepository CatchCompositions { get; }
+    public IPersonnelRepository Personnel { get; }
+    public IVesselRepository Vessels { get; }
+    public IPermitRepository Permits { get; }
+    public ISpeciesRepository Species { get; }
+    public ICatchQuotaRepository CatchQuotas { get; }
+    public ILogbookRepository Logbook { get; }
     public IInspectionRepository Inspections { get; }
-    public IShipClassificationLogRepository ShipClassificationLogs { get; }
-    public IRefreshTokenRepository RefreshTokens { get; }
+    public ITicketRepository Tickets { get; }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

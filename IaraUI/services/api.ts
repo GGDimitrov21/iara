@@ -52,208 +52,380 @@ export const authApi = {
   },
 };
 
-// ==================== FISHING SHIPS API ====================
+// ==================== PERSONNEL API ====================
 
-export interface CreateFishingShipRequest {
-  iaraIdNumber: string;
-  maritimeNumber: string;
-  shipName: string;
-  ownerName: string;
-  tonnage: number;
-  shipLength: number;
-  enginePower: number;
-  fuelType?: string;
-  registrationDate: string; // YYYY-MM-DD
+export interface PersonnelDto {
+  personId: number;
+  name: string;
+  role: string;
+  contactEmail?: string;
 }
 
-export interface UpdateFishingShipRequest {
-  shipName: string;
-  ownerName: string;
-  tonnage: number;
-  shipLength: number;
-  enginePower: number;
-  fuelType?: string;
-  isActive: boolean;
+export interface CreatePersonnelRequest {
+  name: string;
+  role: string;
+  contactEmail?: string;
 }
 
-export interface FishingShipResponse extends CreateFishingShipRequest {
-  shipId: number;
-  isActive: boolean;
-}
-
-export const fishingShipsApi = {
-  getAll: async (): Promise<FishingShipResponse[]> => {
-    const response = await apiClient.get<FishingShipResponse[]>('/api/fishingships');
+export const personnelApi = {
+  getAll: async (): Promise<PersonnelDto[]> => {
+    const response = await apiClient.get<PersonnelDto[]>('/api/personnel');
     return response.data;
   },
 
-  getById: async (id: number): Promise<FishingShipResponse> => {
-    const response = await apiClient.get<FishingShipResponse>(`/api/fishingships/${id}`);
+  getById: async (id: number): Promise<PersonnelDto> => {
+    const response = await apiClient.get<PersonnelDto>(`/api/personnel/${id}`);
     return response.data;
   },
 
-  create: async (data: CreateFishingShipRequest): Promise<FishingShipResponse> => {
-    const response = await apiClient.post<FishingShipResponse>('/api/fishingships', data);
+  getByRole: async (role: string): Promise<PersonnelDto[]> => {
+    const response = await apiClient.get<PersonnelDto[]>(`/api/personnel/role/${role}`);
     return response.data;
   },
 
-  update: async (id: number, data: UpdateFishingShipRequest): Promise<FishingShipResponse> => {
-    const response = await apiClient.put<FishingShipResponse>(`/api/fishingships/${id}`, data);
+  create: async (data: CreatePersonnelRequest): Promise<PersonnelDto> => {
+    const response = await apiClient.post<PersonnelDto>('/api/personnel', data);
+    return response.data;
+  },
+
+  update: async (id: number, data: CreatePersonnelRequest): Promise<PersonnelDto> => {
+    const response = await apiClient.put<PersonnelDto>(`/api/personnel/${id}`, data);
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
-    await apiClient.delete(`/api/fishingships/${id}`);
+    await apiClient.delete(`/api/personnel/${id}`);
   },
 };
 
-// ==================== FISHING PERMITS API ====================
+// ==================== VESSELS API ====================
 
-export interface CreateFishingPermitRequest {
-  shipId: number;
-  permitYear: number;
-  validFrom: string; // YYYY-MM-DD
-  validUntil: string; // YYYY-MM-DD
-  catchQuotaType?: string;
-  minAnnualCatch?: number;
-  maxAnnualCatch?: number;
-  totalHoursAnnualLimit?: number;
+export interface VesselDto {
+  vesselId: number;
+  regNumber: string;
+  vesselName: string;
+  ownerDetails?: string;
+  captainId?: number;
+  captainName?: string;
+  lengthM?: number;
+  widthM?: number;
+  tonnage?: number;
+  fuelType?: string;
+  enginePowerKw?: number;
+  displacementTons?: number;
 }
 
-export interface FishingPermitResponse extends CreateFishingPermitRequest {
+export interface CreateVesselRequest {
+  regNumber: string;
+  vesselName: string;
+  ownerDetails?: string;
+  captainId?: number;
+  lengthM?: number;
+  widthM?: number;
+  tonnage?: number;
+  fuelType?: string;
+  enginePowerKw?: number;
+  displacementTons?: number;
+}
+
+export interface UpdateVesselRequest {
+  vesselName: string;
+  ownerDetails?: string;
+  captainId?: number;
+  lengthM?: number;
+  widthM?: number;
+  tonnage?: number;
+  fuelType?: string;
+  enginePowerKw?: number;
+  displacementTons?: number;
+}
+
+export const vesselsApi = {
+  getAll: async (): Promise<VesselDto[]> => {
+    const response = await apiClient.get<VesselDto[]>('/api/vessels');
+    return response.data;
+  },
+
+  getById: async (id: number): Promise<VesselDto> => {
+    const response = await apiClient.get<VesselDto>(`/api/vessels/${id}`);
+    return response.data;
+  },
+
+  create: async (data: CreateVesselRequest): Promise<VesselDto> => {
+    const response = await apiClient.post<VesselDto>('/api/vessels', data);
+    return response.data;
+  },
+
+  update: async (id: number, data: UpdateVesselRequest): Promise<VesselDto> => {
+    const response = await apiClient.put<VesselDto>(`/api/vessels/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/vessels/${id}`);
+  },
+};
+
+// ==================== PERMITS API ====================
+
+export interface PermitDto {
   permitId: number;
-  shipName: string;
-  issueDate: string; // YYYY-MM-DD
-  status: string;
+  vesselId: number;
+  vesselName: string;
+  issueDate: string;
+  expiryDate: string;
+  isActive: boolean;
 }
 
-export const fishingPermitsApi = {
-  getById: async (id: number): Promise<FishingPermitResponse> => {
-    const response = await apiClient.get<FishingPermitResponse>(`/api/fishingpermits/${id}`);
+export interface CreatePermitRequest {
+  vesselId: number;
+  issueDate: string;
+  expiryDate: string;
+}
+
+export const permitsApi = {
+  getAll: async (): Promise<PermitDto[]> => {
+    const response = await apiClient.get<PermitDto[]>('/api/permits');
     return response.data;
   },
 
-  getByShipId: async (shipId: number): Promise<FishingPermitResponse[]> => {
-    const response = await apiClient.get<FishingPermitResponse[]>(`/api/fishingpermits/ship/${shipId}`);
+  getById: async (id: number): Promise<PermitDto> => {
+    const response = await apiClient.get<PermitDto>(`/api/permits/${id}`);
     return response.data;
   },
 
-  create: async (data: CreateFishingPermitRequest): Promise<FishingPermitResponse> => {
-    const response = await apiClient.post<FishingPermitResponse>('/api/fishingpermits', data);
+  getByVesselId: async (vesselId: number): Promise<PermitDto[]> => {
+    const response = await apiClient.get<PermitDto[]>(`/api/permits/vessel/${vesselId}`);
+    return response.data;
+  },
+
+  create: async (data: CreatePermitRequest): Promise<PermitDto> => {
+    const response = await apiClient.post<PermitDto>('/api/permits', data);
     return response.data;
   },
 
   revoke: async (id: number): Promise<void> => {
-    await apiClient.post(`/api/fishingpermits/${id}/revoke`);
+    await apiClient.post(`/api/permits/${id}/revoke`);
   },
 };
 
-// ==================== FISHING LOGS API ====================
+// ==================== SPECIES API ====================
 
-export interface CatchCompositionRequest {
-  fishSpecies: string;
-  weightKg?: number;
-  count?: number;
-  status?: string;
+export interface SpeciesDto {
+  speciesId: number;
+  speciesName: string;
 }
 
-export interface CreateFishingLogEntryRequest {
-  shipId: number;
-  logDate: string; // YYYY-MM-DD
-  startTime?: string; // HH:mm:ss
-  endTime?: string; // HH:mm:ss
-  fishingZone?: string;
-  catchDetails?: string;
-  routeDetails?: string;
-  catchCompositions: CatchCompositionRequest[];
+export interface CreateSpeciesRequest {
+  speciesName: string;
 }
 
-export interface CatchCompositionResponse extends CatchCompositionRequest {
-  catchId: number;
+export const speciesApi = {
+  getAll: async (): Promise<SpeciesDto[]> => {
+    const response = await apiClient.get<SpeciesDto[]>('/api/species');
+    return response.data;
+  },
+
+  getById: async (id: number): Promise<SpeciesDto> => {
+    const response = await apiClient.get<SpeciesDto>(`/api/species/${id}`);
+    return response.data;
+  },
+
+  create: async (data: CreateSpeciesRequest): Promise<SpeciesDto> => {
+    const response = await apiClient.post<SpeciesDto>('/api/species', data);
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/species/${id}`);
+  },
+};
+
+// ==================== CATCH QUOTAS API ====================
+
+export interface CatchQuotaDto {
+  quotaId: number;
+  permitId: number;
+  speciesId: number;
+  speciesName: string;
+  year: number;
+  minCatchKg?: number;
+  avgCatchKg?: number;
+  maxCatchKg: number;
+  fuelHoursLimit?: number;
 }
 
-export interface FishingLogEntryResponse {
+export interface CreateCatchQuotaRequest {
+  permitId: number;
+  speciesId: number;
+  year: number;
+  minCatchKg?: number;
+  avgCatchKg?: number;
+  maxCatchKg: number;
+  fuelHoursLimit?: number;
+}
+
+export interface UpdateCatchQuotaRequest {
+  minCatchKg?: number;
+  avgCatchKg?: number;
+  maxCatchKg: number;
+  fuelHoursLimit?: number;
+}
+
+export const quotasApi = {
+  getAll: async (): Promise<CatchQuotaDto[]> => {
+    const response = await apiClient.get<CatchQuotaDto[]>('/api/quotas');
+    return response.data;
+  },
+
+  getById: async (id: number): Promise<CatchQuotaDto> => {
+    const response = await apiClient.get<CatchQuotaDto>(`/api/quotas/${id}`);
+    return response.data;
+  },
+
+  getByPermitId: async (permitId: number): Promise<CatchQuotaDto[]> => {
+    const response = await apiClient.get<CatchQuotaDto[]>(`/api/quotas/permit/${permitId}`);
+    return response.data;
+  },
+
+  create: async (data: CreateCatchQuotaRequest): Promise<CatchQuotaDto> => {
+    const response = await apiClient.post<CatchQuotaDto>('/api/quotas', data);
+    return response.data;
+  },
+
+  update: async (id: number, data: UpdateCatchQuotaRequest): Promise<CatchQuotaDto> => {
+    const response = await apiClient.put<CatchQuotaDto>(`/api/quotas/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/quotas/${id}`);
+  },
+};
+
+// ==================== LOGBOOK API ====================
+
+export interface LogbookEntryDto {
   logEntryId: number;
-  shipId: number;
-  shipName: string;
-  logDate: string;
-  startTime?: string;
-  endTime?: string;
-  fishingZone?: string;
-  catchDetails?: string;
-  routeDetails?: string;
-  isSigned: boolean;
-  submittedAt: string;
-  catchCompositions: CatchCompositionResponse[];
+  vesselId: number;
+  vesselName: string;
+  captainId: number;
+  captainName: string;
+  startTime: string;
+  durationHours?: number;
+  latitude?: number;
+  longitude?: number;
+  speciesId: number;
+  speciesName: string;
+  catchKg: number;
 }
 
-export const fishingLogsApi = {
-  getById: async (id: number): Promise<FishingLogEntryResponse> => {
-    const response = await apiClient.get<FishingLogEntryResponse>(`/api/fishinglogs/${id}`);
+export interface CreateLogbookEntryRequest {
+  vesselId: number;
+  captainId: number;
+  startTime: string;
+  durationHours?: number;
+  latitude?: number;
+  longitude?: number;
+  speciesId: number;
+  catchKg: number;
+}
+
+export interface UpdateLogbookEntryRequest {
+  startTime: string;
+  durationHours?: number;
+  latitude?: number;
+  longitude?: number;
+  speciesId: number;
+  catchKg: number;
+}
+
+export const logbookApi = {
+  getAll: async (): Promise<LogbookEntryDto[]> => {
+    const response = await apiClient.get<LogbookEntryDto[]>('/api/logbook');
     return response.data;
   },
 
-  getByShipId: async (shipId: number): Promise<FishingLogEntryResponse[]> => {
-    const response = await apiClient.get<FishingLogEntryResponse[]>(`/api/fishinglogs/ship/${shipId}`);
+  getById: async (id: number): Promise<LogbookEntryDto> => {
+    const response = await apiClient.get<LogbookEntryDto>(`/api/logbook/${id}`);
     return response.data;
   },
 
-  create: async (data: CreateFishingLogEntryRequest): Promise<FishingLogEntryResponse> => {
-    const response = await apiClient.post<FishingLogEntryResponse>('/api/fishinglogs', data);
+  getByVesselId: async (vesselId: number): Promise<LogbookEntryDto[]> => {
+    const response = await apiClient.get<LogbookEntryDto[]>(`/api/logbook/vessel/${vesselId}`);
     return response.data;
   },
 
-  sign: async (id: number): Promise<void> => {
-    await apiClient.post(`/api/fishinglogs/${id}/sign`);
+  create: async (data: CreateLogbookEntryRequest): Promise<LogbookEntryDto> => {
+    const response = await apiClient.post<LogbookEntryDto>('/api/logbook', data);
+    return response.data;
+  },
+
+  update: async (id: number, data: UpdateLogbookEntryRequest): Promise<LogbookEntryDto> => {
+    const response = await apiClient.put<LogbookEntryDto>(`/api/logbook/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/logbook/${id}`);
   },
 };
 
 // ==================== INSPECTIONS API ====================
 
-export interface CreateInspectionRequest {
-  shipId: number;
-  inspectionLocation?: string;
-  protocolNumber: string;
-  hasViolation: boolean;
-  violationDescription?: string;
-  sanctionsImposed?: string;
-  proofOfViolationUrl?: string;
+export interface InspectionDto {
+  inspectionId: number;
+  vesselId: number;
+  vesselName: string;
+  inspectorId: number;
+  inspectorName: string;
+  inspectionDate: string;
+  isLegal: boolean;
+  notes?: string;
 }
 
-export interface InspectionResponse {
-  inspectionId: number;
-  inspectorId?: number;
-  inspectorName?: string;
-  shipId: number;
-  shipName: string;
+export interface CreateInspectionRequest {
+  vesselId: number;
+  inspectorId: number;
   inspectionDate: string;
-  inspectionLocation?: string;
-  protocolNumber: string;
-  hasViolation: boolean;
-  violationDescription?: string;
-  sanctionsImposed?: string;
-  proofOfViolationUrl?: string;
-  isProcessed: boolean;
+  isLegal: boolean;
+  notes?: string;
+}
+
+export interface UpdateInspectionRequest {
+  inspectionDate: string;
+  isLegal: boolean;
+  notes?: string;
 }
 
 export const inspectionsApi = {
-  getById: async (id: number): Promise<InspectionResponse> => {
-    const response = await apiClient.get<InspectionResponse>(`/api/inspections/${id}`);
+  getAll: async (): Promise<InspectionDto[]> => {
+    const response = await apiClient.get<InspectionDto[]>('/api/inspections');
     return response.data;
   },
 
-  getByShipId: async (shipId: number): Promise<InspectionResponse[]> => {
-    const response = await apiClient.get<InspectionResponse[]>(`/api/inspections/ship/${shipId}`);
+  getById: async (id: number): Promise<InspectionDto> => {
+    const response = await apiClient.get<InspectionDto>(`/api/inspections/${id}`);
     return response.data;
   },
 
-  create: async (data: CreateInspectionRequest): Promise<InspectionResponse> => {
-    const response = await apiClient.post<InspectionResponse>('/api/inspections', data);
+  getByVesselId: async (vesselId: number): Promise<InspectionDto[]> => {
+    const response = await apiClient.get<InspectionDto[]>(`/api/inspections/vessel/${vesselId}`);
     return response.data;
   },
 
-  process: async (id: number): Promise<void> => {
-    await apiClient.post(`/api/inspections/${id}/process`);
+  create: async (data: CreateInspectionRequest): Promise<InspectionDto> => {
+    const response = await apiClient.post<InspectionDto>('/api/inspections', data);
+    return response.data;
+  },
+
+  update: async (id: number, data: UpdateInspectionRequest): Promise<InspectionDto> => {
+    const response = await apiClient.put<InspectionDto>(`/api/inspections/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/inspections/${id}`);
   },
 };
 
@@ -261,8 +433,11 @@ export const inspectionsApi = {
 
 export default {
   auth: authApi,
-  fishingShips: fishingShipsApi,
-  fishingPermits: fishingPermitsApi,
-  fishingLogs: fishingLogsApi,
+  personnel: personnelApi,
+  vessels: vesselsApi,
+  permits: permitsApi,
+  species: speciesApi,
+  quotas: quotasApi,
+  logbook: logbookApi,
   inspections: inspectionsApi,
 };

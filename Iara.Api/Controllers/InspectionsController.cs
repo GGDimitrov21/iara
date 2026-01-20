@@ -2,16 +2,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Iara.Application.DTOs.Inspections;
 using Iara.Application.Services;
-using System.Security.Claims;
 
 namespace Iara.Api.Controllers;
 
 /// <summary>
-/// Controller for managing fishing inspections
+/// Controller for managing inspections
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Inspector,Admin")]
 public class InspectionsController : ControllerBase
 {
     private readonly IInspectionService _inspectionService;
@@ -26,6 +24,16 @@ public class InspectionsController : ControllerBase
     }
 
     /// <summary>
+    /// Get all inspections
+    /// </summary>
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var result = await _inspectionService.GetAllAsync(cancellationToken);
+        return result.IsSuccess ? Ok(result.Data) : BadRequest(result.ErrorMessage);
+    }
+
+    /// <summary>
     /// Get inspection by ID
     /// </summary>
     [HttpGet("{id}")]
@@ -36,12 +44,12 @@ public class InspectionsController : ControllerBase
     }
 
     /// <summary>
-    /// Get all inspections for a specific ship
+    /// Get all inspections for a specific vessel
     /// </summary>
-    [HttpGet("ship/{shipId}")]
-    public async Task<IActionResult> GetByShipId(int shipId, CancellationToken cancellationToken)
+    [HttpGet("vessel/{vesselId}")]
+    public async Task<IActionResult> GetByVesselId(int vesselId, CancellationToken cancellationToken)
     {
-        var result = await _inspectionService.GetInspectionsByShipAsync(shipId, cancellationToken);
+        var result = await _inspectionService.GetByVesselAsync(vesselId, cancellationToken);
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.ErrorMessage);
     }
 
@@ -51,28 +59,31 @@ public class InspectionsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateInspectionRequest request, CancellationToken cancellationToken)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (!int.TryParse(userIdClaim, out var inspectorId))
-        {
-            return Unauthorized("Invalid inspector ID");
-        }
-
-        var result = await _inspectionService.CreateAsync(request, inspectorId, cancellationToken);
+        var result = await _inspectionService.CreateAsync(request, cancellationToken);
         
         if (!result.IsSuccess)
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(new { message = result.ErrorMessage });
 
         return CreatedAtAction(nameof(GetById), new { id = result.Data!.InspectionId }, result.Data);
     }
 
     /// <summary>
-    /// Mark inspection as processed
+    /// Update an inspection
     /// </summary>
-    [HttpPost("{id}/process")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> ProcessInspection(int id, CancellationToken cancellationToken)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateInspectionRequest request, CancellationToken cancellationToken)
     {
-        var result = await _inspectionService.ProcessInspectionAsync(id, cancellationToken);
-        return result.IsSuccess ? NoContent() : BadRequest(result.ErrorMessage);
+        var result = await _inspectionService.UpdateAsync(id, request, cancellationToken);
+        return result.IsSuccess ? Ok(result.Data) : BadRequest(new { message = result.ErrorMessage });
+    }
+
+    /// <summary>
+    /// Delete an inspection
+    /// </summary>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        var result = await _inspectionService.DeleteAsync(id, cancellationToken);
+        return result.IsSuccess ? NoContent() : BadRequest(new { message = result.ErrorMessage });
     }
 }

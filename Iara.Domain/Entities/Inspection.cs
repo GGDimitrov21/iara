@@ -8,18 +8,14 @@ namespace Iara.Domain.Entities;
 public class Inspection : BaseEntity
 {
     public int InspectionId { get; set; }
-    public int? InspectorId { get; set; }
-    public int ShipId { get; set; }
-    public DateTime InspectionDate { get; set; } = DateTime.UtcNow;
-    public string? InspectionLocation { get; set; }
-    public string ProtocolNumber { get; set; } = string.Empty;
-    public bool HasViolation { get; set; }
-    public string? ViolationDescription { get; set; }
-    public string? SanctionsImposed { get; set; }
-    public string? ProofOfViolationUrl { get; set; }
-    public bool IsProcessed { get; set; } = false;
+    public int VesselId { get; set; }
+    public int InspectorId { get; set; }
+    public DateTime InspectionDate { get; set; }
+    public bool IsLegal { get; set; }
+    public string? Notes { get; set; }
     
     // Navigation properties
-    public User? Inspector { get; set; }
-    public FishingShip Ship { get; set; } = null!;
+    public Vessel Vessel { get; set; } = null!;
+    public Personnel Inspector { get; set; } = null!;
+    public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

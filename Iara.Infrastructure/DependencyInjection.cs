@@ -20,8 +20,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // Database Configuration
-        var connectionString = configuration.GetSection(DatabaseSettings.SectionName)["ConnectionString"];
+        // Database Configuration - using SQL Server
+        var connectionString = configuration.GetSection(DatabaseSettings.SectionName)["ConnectionString"]
+            ?? configuration.GetConnectionString("DefaultConnection");
         
         if (string.IsNullOrWhiteSpace(connectionString))
         {
@@ -29,21 +30,20 @@ public static class DependencyInjection
         }
 
         services.AddDbContext<IaraDbContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseSqlServer(connectionString));
 
         // HTTP Context Accessor for IP address tracking
         services.AddHttpContextAccessor();
 
         // Repository Registration
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IFishingShipRepository, FishingShipRepository>();
-        services.AddScoped<IRegistrationRepository, RegistrationRepository>();
-        services.AddScoped<IFishingPermitRepository, FishingPermitRepository>();
-        services.AddScoped<IFishingLogEntryRepository, FishingLogEntryRepository>();
-        services.AddScoped<ICatchCompositionRepository, CatchCompositionRepository>();
+        services.AddScoped<IPersonnelRepository, PersonnelRepository>();
+        services.AddScoped<IVesselRepository, VesselRepository>();
+        services.AddScoped<IPermitRepository, PermitRepository>();
+        services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+        services.AddScoped<ICatchQuotaRepository, CatchQuotaRepository>();
+        services.AddScoped<ILogbookRepository, LogbookRepository>();
         services.AddScoped<IInspectionRepository, InspectionRepository>();
-        services.AddScoped<IShipClassificationLogRepository, ShipClassificationLogRepository>();
-        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<ITicketRepository, TicketRepository>();
 
         // Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -58,10 +58,12 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
 
         // Business Services
-        services.AddScoped<IFishingShipService, FishingShipService>();
-        services.AddScoped<IFishingPermitService, FishingPermitService>();
-        services.AddScoped<IFishingLogEntryService, FishingLogEntryService>();
-        services.AddScoped<IInspectionService, InspectionService>();
+        services.AddScoped<IVesselService, VesselService>();
+        services.AddScoped<IPermitService, PermitService>();
+        services.AddScoped<ILogbookService, LogbookService>();
+        services.AddScoped<IInspectionService, NewInspectionService>();
+        services.AddScoped<ISpeciesService, SpeciesService>();
+        services.AddScoped<ICatchQuotaService, CatchQuotaService>();
 
         return services;
     }

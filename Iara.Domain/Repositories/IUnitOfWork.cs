@@ -5,15 +5,14 @@ namespace Iara.Domain.Repositories;
 /// </summary>
 public interface IUnitOfWork : IDisposable
 {
-    IUserRepository Users { get; }
-    IFishingShipRepository FishingShips { get; }
-    IRegistrationRepository Registrations { get; }
-    IFishingPermitRepository FishingPermits { get; }
-    IFishingLogEntryRepository FishingLogEntries { get; }
-    ICatchCompositionRepository CatchCompositions { get; }
+    IPersonnelRepository Personnel { get; }
+    IVesselRepository Vessels { get; }
+    IPermitRepository Permits { get; }
+    ISpeciesRepository Species { get; }
+    ICatchQuotaRepository CatchQuotas { get; }
+    ILogbookRepository Logbook { get; }
     IInspectionRepository Inspections { get; }
-    IShipClassificationLogRepository ShipClassificationLogs { get; }
-    IRefreshTokenRepository RefreshTokens { get; }
+    ITicketRepository Tickets { get; }
     
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);

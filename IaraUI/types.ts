@@ -1,77 +1,80 @@
-export interface FishingShip {
-  shipId: number;
-  iaraIdNumber: string;
-  maritimeNumber: string;
-  shipName: string;
-  ownerName: string;
-  tonnage: number;
-  shipLength: number;
-  enginePower: number;
+// Personnel
+export interface Personnel {
+  personId: number;
+  name: string;
+  role: string;
+  contactEmail?: string;
+}
+
+// Vessel
+export interface Vessel {
+  vesselId: number;
+  regNumber: string;
+  vesselName: string;
+  ownerDetails?: string;
+  captainId?: number;
+  captainName?: string;
+  lengthM?: number;
+  widthM?: number;
+  tonnage?: number;
   fuelType?: string;
-  registrationDate: string;
+  enginePowerKw?: number;
+  displacementTons?: number;
+}
+
+// Permit
+export interface Permit {
+  permitId: number;
+  vesselId: number;
+  vesselName: string;
+  issueDate: string;
+  expiryDate: string;
   isActive: boolean;
 }
 
-export interface FishingPermit {
-  permitId: number;
-  shipId: number;
-  shipName: string;
-  permitYear: number;
-  issueDate: string;
-  validFrom: string;
-  validUntil: string;
-  catchQuotaType?: string;
-  minAnnualCatch?: number;
-  maxAnnualCatch?: number;
-  totalHoursAnnualLimit?: number;
-  status: string;
+// Species
+export interface Species {
+  speciesId: number;
+  speciesName: string;
 }
 
-export interface CatchComposition {
-  catchId: number;
-  fishSpecies: string;
-  weightKg?: number;
-  count?: number;
-  status?: string;
-}
-
-export interface FishingLog {
-  logEntryId: number;
-  shipId: number;
-  shipName: string;
-  logDate: string;
-  startTime?: string;
-  endTime?: string;
-  fishingZone?: string;
-  catchDetails?: string;
-  routeDetails?: string;
-  isSigned: boolean;
-  submittedAt: string;
-  catchCompositions: CatchComposition[];
-}
-
-export interface Inspection {
-  inspectionId: number;
-  inspectorId?: number;
-  inspectorName?: string;
-  shipId: number;
-  shipName: string;
-  inspectionDate: string;
-  inspectionLocation?: string;
-  protocolNumber: string;
-  hasViolation: boolean;
-  violationDescription?: string;
-  sanctionsImposed?: string;
-  proofOfViolationUrl?: string;
-  isProcessed: boolean;
-}
-
+// Catch Quota
 export interface CatchQuota {
-  permitId: string;
+  quotaId: number;
+  permitId: number;
+  speciesId: number;
   speciesName: string;
   year: number;
-  minCatch: number;
-  avgCatch: number;
-  maxCatch: number;
-  fuelLimit: number;
+  minCatchKg?: number;
+  avgCatchKg?: number;
+  maxCatchKg: number;
+  fuelHoursLimit?: number;
+}
+
+// Logbook Entry
+export interface LogbookEntry {
+  logEntryId: number;
+  vesselId: number;
+  vesselName: string;
+  captainId: number;
+  captainName: string;
+  startTime: string;
+  durationHours?: number;
+  latitude?: number;
+  longitude?: number;
+  speciesId: number;
+  speciesName: string;
+  catchKg: number;
+}
+
+// Inspection
+export interface Inspection {
+  inspectionId: number;
+  vesselId: number;
+  vesselName: string;
+  inspectorId: number;
+  inspectorName: string;
+  inspectionDate: string;
+  isLegal: boolean;
+  notes?: string;
 }
